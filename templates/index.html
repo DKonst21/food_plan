@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-light fixed-top navbar__opacity">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{% url "index" %}">
                     <img src={% static 'img/logo.8d8f24edbb5f.svg' %} height="55" width="189" alt="">
                 </a>
                 <a href='{% url 'auth' %}'
@@ -34,7 +34,9 @@
                             Вы получаете рецепты + список продуктов.<br>
                             Больше не нужно думать, что готовить.</h4>
                         <div class="d-block mt-3">
-                            <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Хочу попробовать</button>
+                            <a href="{% url "subscribe" %}">
+                                <button class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Хочу попробовать</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -229,7 +231,7 @@
     </main>
     <footer class="footer py-4 mt-5" style="border-top: 1px solid lightgray;">
         <div class="container d-flex flex-row justify-content-between mb-2">
-            <a href="https://vk.com/devmanorg">
+            <a href="https://vk.com/devmanorg" target="_blank" rel="noopener">
                 <img src={% static 'img/vk.png' %} height="40" width="auto" alt="">
             </a>
             <div>
