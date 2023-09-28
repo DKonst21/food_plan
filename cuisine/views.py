@@ -1,19 +1,21 @@
-from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 
 
 def index(request):
+    auth = False
+
     if request.user.is_authenticated:
         auth = True
 
     return render(request, 'index.html', {'auth': auth})
 
 
-def auth_user(request):
-    return render(request, 'auth.html')
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 
 def register_user(request):
@@ -27,12 +29,9 @@ def register_user(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
-            messages.success(request, 'You have singed up successfully.')
             login(request, user)
             return redirect('lk')
         else:
-            print(form.is_valid())
-            messages.error(request, 'Something again went wrong...')
             return render(request, 'registration.html', {'form': form})
 
 
