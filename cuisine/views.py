@@ -6,7 +6,10 @@ from .forms import RegisterForm
 
 
 def index(request):
-    return render(request, 'index.html')
+    if request.user.is_authenticated:
+        auth = True
+
+    return render(request, 'index.html', {'auth': auth})
 
 
 def auth_user(request):
