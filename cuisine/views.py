@@ -1,7 +1,9 @@
+import random
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from .models import Dish
 
 
 def index(request):
@@ -10,7 +12,15 @@ def index(request):
     if request.user.is_authenticated:
         auth = True
 
-    return render(request, 'index.html', {'auth': auth})
+    recipes_keys = list(Dish.objects.values_list('pk', flat=True))
+    print(recipes_keys)
+    random_keys = random.sample(recipes_keys, 5)
+    recipes = Dish.objects.filter(pk__in=random_keys)
+    context = {
+        'auth': auth,
+        'recipes': recipes,
+    }
+    return render(request, 'index.html', context)
 
 
 def logout_view(request):
