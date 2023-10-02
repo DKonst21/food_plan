@@ -9,4 +9,5 @@ urlpatterns = [
     path('lk', views.show_user_page, name='lk'),
     path('logout', views.logout_view, name='logout'),
     path('auth', auth_views.LoginView.as_view(template_name='auth.html', next_page='lk'), name='auth'),
+    path('card/<slug:slug>', views.show_recipe_card, name='card'),
 ]

@@ -97,7 +97,9 @@
                                 <img src="{{ MEDIA_URL }}{{ recipe.image|urlencode }}" class="d-block w-100" alt="...">
                                 <div class="card-img-overlay text-white text-center carousel-item__gradient">
                                     <h5><b>Модный и полезный ужин</b></h5>
-                                    <h2><b>{{ recipe.name }}</b></h2>
+                                    <a href="{% url "card" recipe.slug %}" style="text-decoration:none">
+                                        <h2><b>{{ recipe.name }}</b></h2>
+                                    </a>
                                 </div>
                             </div>
                             {% endfor %}

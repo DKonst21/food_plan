@@ -52,3 +52,9 @@ def subscribe(request):
 @login_required(login_url='/auth')
 def show_user_page(request):
     return render(request, 'lk.html')
+
+
+def show_recipe_card(request, slug):
+    recipe = Dish.objects.get(slug=slug)
+    context = {'recipe': recipe}
+    return render(request, 'card2.html', context)
