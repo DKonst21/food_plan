@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
-# from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils import timezone
 
 from autoslug import AutoSlugField
+from multiselectfield import MultiSelectField
 
 
 class Dish(models.Model):
@@ -37,3 +39,33 @@ class Dish(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Subscription(models.Model):
+    PERIOD = (
+        ('1', '1 месяц'),
+        ('3', '3 месяца'),
+        ('6', '6 месяцев'),
+        ('12', '12 месяцев')
+    )
+    ALLERGENS = (
+        ('FISH', 'рыба и морепродукты'),
+        ('MEAT', 'мясо'),
+        ('CEREAL', 'зерновые'),
+        ('HONEY', 'продукты пчеловодства'),
+        ('NUTS', 'орехи и бобовые'),
+        ('MILK', 'молочные продукты'),
+    )
+    MEAL_TYPES = (
+        ('BREAKFAST', 'завтрак'),
+        ('LUNCH', 'обед'),
+        ('DINNER', 'ужин'),
+        ('DESSERT', 'десерт'),
+    )
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    is_paid = models.BooleanField('Статус оплаты', default=False)
+    period = models.CharField('Период', choices=PERIOD, default='1', max_length=10)
+    started_at = models.DateTimeField('дата начала', default=timezone.now)
+    ends_at = models.DateTimeField('дата окончания')
+    meal_types = MultiSelectField('тип приема пищи', choices=MEAL_TYPES, max_length=50)
+    allergy_types = MultiSelectField('аллергены', choices=ALLERGENS, max_length=50)
