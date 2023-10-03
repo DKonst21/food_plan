@@ -1,4 +1,5 @@
 import os
+import random
 import requests
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
@@ -26,6 +27,8 @@ def get_recipes_links(url, pages):
 
 
 def get_recipe_details(urls_list, diet):
+    ALLERGENS = ['FISH', 'MEAT', 'CEREAL', 'HONEY', 'NUTS', 'MILK']
+    MEAL_TYPES = ('BREAKFAST', 'LUNCH', 'DINNER', 'DESSERT')
     base_url = "https://www.iamcook.ru"
 
     for number, url in enumerate(urls_list):
@@ -59,8 +62,8 @@ def get_recipe_details(urls_list, diet):
             ingredients=ingredients,
             image=ContentFile(image_response.content, name=f'{number}{ext}'),
             recipe=description,
-            meal_type='LUNCH',
-            allergens='FISH',
+            meal_type=random.choice(MEAL_TYPES),
+            allergens=random.choice(ALLERGENS),
         )
         recipe.save()
 
